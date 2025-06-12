@@ -1,33 +1,33 @@
-import React, { useState } from 'react';
-import { Search } from 'lucide-react';
-import Input from '../ui/Input';
-import Button from '../ui/Button';
+import React, { useState } from 'react'
+import { Search } from 'lucide-react'
+import Input from '../atoms/Input'
+import Button from '../atoms/Button'
 
 interface ZipCodeSearchProps {
-  onSearch: (zipCode: string) => void;
+  onSearch: (zipCode: string) => void
 }
 
 const ZipCodeSearch: React.FC<ZipCodeSearchProps> = ({ onSearch }) => {
-  const [zipCode, setZipCode] = useState('');
-  const [error, setError] = useState('');
-  
+  const [zipCode, setZipCode] = useState('')
+  const [error, setError] = useState('')
+
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
+    e.preventDefault()
+
     if (!zipCode) {
-      setError('Please enter a zip code');
-      return;
+      setError('Please enter a zip code')
+      return
     }
-    
+
     if (!/^\d{5}$/.test(zipCode)) {
-      setError('Please enter a valid 5-digit zip code');
-      return;
+      setError('Please enter a valid 5-digit zip code')
+      return
     }
-    
-    setError('');
-    onSearch(zipCode);
-  };
-  
+
+    setError('')
+    onSearch(zipCode)
+  }
+
   return (
     <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
       <div className="flex-grow">
@@ -35,8 +35,8 @@ const ZipCodeSearch: React.FC<ZipCodeSearchProps> = ({ onSearch }) => {
           placeholder="Enter zip code to compare rates"
           value={zipCode}
           onChange={(e) => {
-            setZipCode(e.target.value);
-            if (error) setError('');
+            setZipCode(e.target.value)
+            if (error) setError('')
           }}
           className="w-full h-12"
           error={error}
@@ -47,7 +47,7 @@ const ZipCodeSearch: React.FC<ZipCodeSearchProps> = ({ onSearch }) => {
         Find Rates
       </Button>
     </form>
-  );
-};
+  )
+}
 
-export default ZipCodeSearch;
+export default ZipCodeSearch

@@ -1,9 +1,9 @@
-import React from 'react';
-import { Search, Shield, Lock } from 'lucide-react';
-import ZipCodeSearch from '../features/ZipCodeSearch';
+import React from 'react'
+import { Search, Shield, Lock } from 'lucide-react'
+import ZipCodeSearch from '../features/ZipCodeSearch'
 
 interface HeroSectionProps {
-  onSearch: (zipCode: string) => void;
+  onSearch: (zipCode: string) => void
 }
 
 const HeroSection: React.FC<HeroSectionProps> = ({ onSearch }) => {
@@ -20,7 +20,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onSearch }) => {
               <span className="text-blue-600"> Anonymously</span>
             </h1>
             <p className="text-lg text-gray-700 mb-8 max-w-lg">
-              Share your home or renters insurance information anonymously and see how your rates compare to others in your area.
+              Share your home or renters insurance information anonymously and
+              see how your rates compare to others in your area.
             </p>
 
             <div className="mb-8">
@@ -34,7 +35,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onSearch }) => {
                 </div>
                 <div>
                   <p className="font-medium">100% Anonymous</p>
-                  <p className="text-sm text-gray-600">No personal data required</p>
+                  <p className="text-sm text-gray-600">
+                    No personal data required
+                  </p>
                 </div>
               </div>
 
@@ -44,7 +47,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onSearch }) => {
                 </div>
                 <div>
                   <p className="font-medium">Secure Sharing</p>
-                  <p className="text-sm text-gray-600">Your data is protected</p>
+                  <p className="text-sm text-gray-600">
+                    Your data is protected
+                  </p>
                 </div>
               </div>
             </div>
@@ -65,21 +70,33 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onSearch }) => {
                     <p className="text-sm text-gray-500 mb-1">Home Insurance</p>
                     <div className="flex justify-between items-end">
                       <div className="text-2xl font-bold">$125/mo</div>
-                      <div className="text-green-600 text-sm">5% below average</div>
+                      <div className="text-green-600 text-sm">
+                        5% below average
+                      </div>
                     </div>
                     <div className="h-2 bg-gray-200 rounded-full mt-2">
-                      <div className="h-2 bg-blue-600 rounded-full" style={{ width: '65%' }}></div>
+                      <div
+                        className="h-2 bg-blue-600 rounded-full"
+                        style={{ width: '65%' }}
+                      ></div>
                     </div>
                   </div>
 
                   <div>
-                    <p className="text-sm text-gray-500 mb-1">Renters Insurance</p>
+                    <p className="text-sm text-gray-500 mb-1">
+                      Renters Insurance
+                    </p>
                     <div className="flex justify-between items-end">
                       <div className="text-2xl font-bold">$22/mo</div>
-                      <div className="text-red-600 text-sm">7% above average</div>
+                      <div className="text-red-600 text-sm">
+                        7% above average
+                      </div>
                     </div>
                     <div className="h-2 bg-gray-200 rounded-full mt-2">
-                      <div className="h-2 bg-amber-500 rounded-full" style={{ width: '40%' }}></div>
+                      <div
+                        className="h-2 bg-amber-500 rounded-full"
+                        style={{ width: '40%' }}
+                      ></div>
                     </div>
                   </div>
 
@@ -89,7 +106,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onSearch }) => {
                         <Search className="h-4 w-4 text-gray-400 mr-1" />
                         <span className="text-gray-500">Based on</span>
                       </div>
-                      <span className="font-medium">143 anonymous submissions</span>
+                      <span className="font-medium">
+                        143 anonymous submissions
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -99,7 +118,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onSearch }) => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default HeroSection;
+export default HeroSection
