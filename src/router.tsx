@@ -1,8 +1,8 @@
-import { 
+import {
   Router,
   Route,
   createBrowserHistory,
-  createRootRouteWithContext
+  createRootRouteWithContext,
 } from '@tanstack/react-router'
 import LandingPage from './pages/LandingPage'
 import HomePage from './pages/HomePage'
@@ -16,13 +16,13 @@ const rootRoute = createRootRouteWithContext<{}>()()
 const landingRoute = new Route({
   getParentRoute: () => rootRoute,
   path: '/',
-  component: LandingPage
+  component: LandingPage,
 })
 
 const homeRoute = new Route({
   getParentRoute: () => rootRoute,
   path: '/home',
-  component: HomePage
+  component: HomePage,
 })
 
 // Create and export the router
@@ -30,7 +30,7 @@ const routeTree = rootRoute.addChildren([landingRoute, homeRoute])
 const router = new Router({
   routeTree,
   defaultPreload: 'intent',
-  history: browserHistory
+  history: browserHistory,
 })
 
 // Register the router for typings
