@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { ChevronsDown, UploadCloud } from 'lucide-react';
-import Input from '../ui/Input';
-import Button from '../ui/Button';
+import React, { useState } from 'react'
+import { ChevronsDown, UploadCloud } from 'lucide-react'
+import Input from '../atoms/Input'
+import Button from '../atoms/Button'
 
 interface InsuranceFormProps {
-  onSubmit: (data: any) => void;
+  onSubmit: (data: any) => void
 }
 
 const InsuranceForm: React.FC<InsuranceFormProps> = ({ onSubmit }) => {
@@ -14,63 +14,74 @@ const InsuranceForm: React.FC<InsuranceFormProps> = ({ onSubmit }) => {
     monthlyPremium: '',
     coverageAmount: '',
     deductible: '',
-    provider: ''
-  });
-  
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
+    provider: '',
+  })
+
+  const [errors, setErrors] = useState<Record<string, string>>({})
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+
     // Clear error for this field when user starts typing
     if (errors[name]) {
-      setErrors(prev => {
-        const newErrors = { ...prev };
-        delete newErrors[name];
-        return newErrors;
-      });
+      setErrors((prev) => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
+      })
     }
-  };
-  
+  }
+
   const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-    
+    const newErrors: Record<string, string> = {}
+
     if (!formData.zipCode) {
-      newErrors.zipCode = 'Zip code is required';
+      newErrors.zipCode = 'Zip code is required'
     } else if (!/^\d{5}$/.test(formData.zipCode)) {
-      newErrors.zipCode = 'Please enter a valid 5-digit zip code';
+      newErrors.zipCode = 'Please enter a valid 5-digit zip code'
     }
-    
+
     if (!formData.monthlyPremium) {
-      newErrors.monthlyPremium = 'Monthly premium is required';
-    } else if (isNaN(Number(formData.monthlyPremium)) || Number(formData.monthlyPremium) <= 0) {
-      newErrors.monthlyPremium = 'Please enter a valid monthly premium amount';
+      newErrors.monthlyPremium = 'Monthly premium is required'
+    } else if (
+      isNaN(Number(formData.monthlyPremium)) ||
+      Number(formData.monthlyPremium) <= 0
+    ) {
+      newErrors.monthlyPremium = 'Please enter a valid monthly premium amount'
     }
-    
+
     if (!formData.coverageAmount) {
-      newErrors.coverageAmount = 'Coverage amount is required';
-    } else if (isNaN(Number(formData.coverageAmount)) || Number(formData.coverageAmount) <= 0) {
-      newErrors.coverageAmount = 'Please enter a valid coverage amount';
+      newErrors.coverageAmount = 'Coverage amount is required'
+    } else if (
+      isNaN(Number(formData.coverageAmount)) ||
+      Number(formData.coverageAmount) <= 0
+    ) {
+      newErrors.coverageAmount = 'Please enter a valid coverage amount'
     }
-    
+
     if (!formData.deductible) {
-      newErrors.deductible = 'Deductible is required';
-    } else if (isNaN(Number(formData.deductible)) || Number(formData.deductible) < 0) {
-      newErrors.deductible = 'Please enter a valid deductible amount';
+      newErrors.deductible = 'Deductible is required'
+    } else if (
+      isNaN(Number(formData.deductible)) ||
+      Number(formData.deductible) < 0
+    ) {
+      newErrors.deductible = 'Please enter a valid deductible amount'
     }
-    
+
     if (!formData.provider) {
-      newErrors.provider = 'Insurance provider is required';
+      newErrors.provider = 'Insurance provider is required'
     }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-  
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
+    e.preventDefault()
+
     if (validateForm()) {
       onSubmit({
         ...formData,
@@ -79,9 +90,9 @@ const InsuranceForm: React.FC<InsuranceFormProps> = ({ onSubmit }) => {
         coverageAmount: Number(formData.coverageAmount),
         deductible: Number(formData.deductible),
         createdAt: new Date(),
-        id: Date.now().toString()
-      });
-      
+        id: Date.now().toString(),
+      })
+
       // Clear form
       setFormData({
         zipCode: '',
@@ -89,15 +100,15 @@ const InsuranceForm: React.FC<InsuranceFormProps> = ({ onSubmit }) => {
         monthlyPremium: '',
         coverageAmount: '',
         deductible: '',
-        provider: ''
-      });
+        provider: '',
+      })
     }
-  };
-  
+  }
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-4">
-        <Input 
+        <Input
           label="Zip Code"
           type="text"
           name="zipCode"
@@ -107,7 +118,7 @@ const InsuranceForm: React.FC<InsuranceFormProps> = ({ onSubmit }) => {
           maxLength={5}
           error={errors.zipCode}
         />
-        
+
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Insurance Type
@@ -125,8 +136,8 @@ const InsuranceForm: React.FC<InsuranceFormProps> = ({ onSubmit }) => {
             <ChevronsDown className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none" />
           </div>
         </div>
-        
-        <Input 
+
+        <Input
           label="Monthly Premium ($)"
           type="number"
           name="monthlyPremium"
@@ -137,8 +148,8 @@ const InsuranceForm: React.FC<InsuranceFormProps> = ({ onSubmit }) => {
           step="0.01"
           error={errors.monthlyPremium}
         />
-        
-        <Input 
+
+        <Input
           label="Coverage Amount ($)"
           type="number"
           name="coverageAmount"
@@ -148,8 +159,8 @@ const InsuranceForm: React.FC<InsuranceFormProps> = ({ onSubmit }) => {
           min="0"
           error={errors.coverageAmount}
         />
-        
-        <Input 
+
+        <Input
           label="Deductible ($)"
           type="number"
           name="deductible"
@@ -159,8 +170,8 @@ const InsuranceForm: React.FC<InsuranceFormProps> = ({ onSubmit }) => {
           min="0"
           error={errors.deductible}
         />
-        
-        <Input 
+
+        <Input
           label="Insurance Provider"
           type="text"
           name="provider"
@@ -170,18 +181,19 @@ const InsuranceForm: React.FC<InsuranceFormProps> = ({ onSubmit }) => {
           error={errors.provider}
         />
       </div>
-      
+
       <div className="pt-2">
         <Button type="submit" className="w-full">
           <UploadCloud className="mr-2 h-5 w-5" />
           Submit Insurance Information
         </Button>
         <p className="mt-3 text-xs text-center text-gray-500">
-          Your information is shared anonymously. We never display personal identifiers.
+          Your information is shared anonymously. We never display personal
+          identifiers.
         </p>
       </div>
     </form>
-  );
-};
+  )
+}
 
-export default InsuranceForm;
+export default InsuranceForm

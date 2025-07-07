@@ -1,4 +1,4 @@
-import { InsuranceData, ZipCodeData } from '../types';
+import { InsuranceData, ZipCodeData } from '../types'
 
 export const mockInsuranceData: InsuranceData[] = [
   {
@@ -10,7 +10,7 @@ export const mockInsuranceData: InsuranceData[] = [
     coverageAmount: 450000,
     deductible: 1000,
     provider: 'State Farm',
-    createdAt: new Date(2023, 10, 15)
+    createdAt: new Date(2023, 10, 15),
   },
   {
     id: '2',
@@ -21,7 +21,7 @@ export const mockInsuranceData: InsuranceData[] = [
     coverageAmount: 500000,
     deductible: 1500,
     provider: 'Allstate',
-    createdAt: new Date(2023, 11, 5)
+    createdAt: new Date(2023, 11, 5),
   },
   {
     id: '3',
@@ -32,7 +32,7 @@ export const mockInsuranceData: InsuranceData[] = [
     coverageAmount: 50000,
     deductible: 500,
     provider: 'Progressive',
-    createdAt: new Date(2023, 9, 20)
+    createdAt: new Date(2023, 9, 20),
   },
   {
     id: '4',
@@ -43,7 +43,7 @@ export const mockInsuranceData: InsuranceData[] = [
     coverageAmount: 40000,
     deductible: 250,
     provider: 'Lemonade',
-    createdAt: new Date(2024, 0, 10)
+    createdAt: new Date(2024, 0, 10),
   },
   {
     id: '5',
@@ -54,7 +54,7 @@ export const mockInsuranceData: InsuranceData[] = [
     coverageAmount: 525000,
     deductible: 2000,
     provider: 'Liberty Mutual',
-    createdAt: new Date(2023, 11, 28)
+    createdAt: new Date(2023, 11, 28),
   },
   {
     id: '6',
@@ -65,7 +65,7 @@ export const mockInsuranceData: InsuranceData[] = [
     coverageAmount: 475000,
     deductible: 1000,
     provider: 'Farmers',
-    createdAt: new Date(2024, 1, 5)
+    createdAt: new Date(2024, 1, 5),
   },
   // New York (10001)
   {
@@ -77,7 +77,7 @@ export const mockInsuranceData: InsuranceData[] = [
     coverageAmount: 600000,
     deductible: 1500,
     provider: 'State Farm',
-    createdAt: new Date(2023, 10, 10)
+    createdAt: new Date(2023, 10, 10),
   },
   {
     id: '8',
@@ -88,9 +88,9 @@ export const mockInsuranceData: InsuranceData[] = [
     coverageAmount: 60000,
     deductible: 500,
     provider: 'Geico',
-    createdAt: new Date(2023, 11, 20)
-  }
-];
+    createdAt: new Date(2023, 11, 20),
+  },
+]
 
 export const mockZipCodes: ZipCodeData[] = [
   {
@@ -98,26 +98,26 @@ export const mockZipCodes: ZipCodeData[] = [
     city: 'Beverly Hills',
     state: 'CA',
     averagePremium: 129.6,
-    insuranceCount: 6
+    insuranceCount: 6,
   },
   {
     zipCode: '10001',
     city: 'New York',
     state: 'NY',
     averagePremium: 107.5,
-    insuranceCount: 2
-  }
-];
+    insuranceCount: 2,
+  },
+]
 
 export const getInsuranceByZipCode = (zipCode: string): InsuranceData[] => {
-  return mockInsuranceData.filter(insurance => insurance.zipCode === zipCode);
-};
+  return mockInsuranceData.filter((insurance) => insurance.zipCode === zipCode)
+}
 
 export const getZipCodeData = (zipCode: string): ZipCodeData | undefined => {
-  return mockZipCodes.find(data => data.zipCode === zipCode);
-};
+  return mockZipCodes.find((data) => data.zipCode === zipCode)
+}
 
 export const saveInsurance = (insurance: InsuranceData): void => {
   // In a real app, this would save to a database
-  console.log('Saving insurance data:', insurance);
-};
+  console.log('Saving insurance data:', insurance)
+}

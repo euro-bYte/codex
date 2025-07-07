@@ -8,9 +8,9 @@ export default {
         'green-accent': '#556b2f',
         yellow: '#ffd580',
         base: '#f4ead5',
-        text: '#730019'
+        text: '#730019',
       },
     },
   },
   plugins: [],
-};
+}
