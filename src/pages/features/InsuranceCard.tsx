@@ -1,7 +1,7 @@
 import React from 'react'
 import { Shield, DollarSign, Home, Info } from 'lucide-react'
-import Card from '../atoms/Card'
-import Badge from '../atoms/Badge'
+import Card from '../../components/atoms/Card'
+import Badge from '../../components/atoms/Badge'
 import { InsuranceData } from '../../types'
 
 interface InsuranceCardProps {

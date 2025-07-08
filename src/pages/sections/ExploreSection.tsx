@@ -3,7 +3,7 @@ import { Filter, Map, BarChart3 } from 'lucide-react'
 import ZipCodeSearch from '../features/ZipCodeSearch'
 import ComparisonTable from '../features/ComparisonTable'
 import InsuranceCard from '../features/InsuranceCard'
-import Button from '../atoms/Button'
+import Button from '../../components/atoms/Button'
 import { InsuranceData } from '../../types'
 
 interface ExploreSectionProps {
@@ -196,7 +196,7 @@ const ExploreSection: React.FC<ExploreSectionProps> = ({
                   We don't have any insurance data for this zip code yet. Be the
                   first to share!
                 </p>
-                <Button href="#share">Share Your Insurance Details</Button>
+                <Button>Share Your Insurance Details</Button>
               </div>
             )}
           </div>

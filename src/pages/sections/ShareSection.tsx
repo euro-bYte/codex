@@ -1,7 +1,7 @@
 import React from 'react'
 import { BadgeCheck, ChevronRight, Shield } from 'lucide-react'
 import InsuranceForm from '../features/InsuranceForm'
-import Card from '../atoms/Card'
+import Card from '../../components/atoms/Card'
 
 interface ShareSectionProps {
   onSubmit: (data: any) => void
