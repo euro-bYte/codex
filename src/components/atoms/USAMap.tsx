@@ -3,12 +3,12 @@ import { USAMap } from '@mirawision/usa-map-react'
 import { StateCode } from '../../types'
 import { CustomStateFill } from '../molecules/StateExplorer'
 
-type USAMapAtomProps = {
+type USAMapProps = {
   onStateSelect: (state: StateCode) => void
   customStates: CustomStateFill
 }
 
-const USAMapAtom: React.FC<USAMapAtomProps> = ({
+const USAMapComponent: React.FC<USAMapProps> = ({
   onStateSelect,
   customStates,
 }) => {
@@ -36,4 +36,4 @@ const USAMapAtom: React.FC<USAMapAtomProps> = ({
   )
 }
 
-export default USAMapAtom
+export default USAMapComponent
