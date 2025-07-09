@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Search } from 'lucide-react'
-import Input from '../atoms/Input'
-import Button from '../atoms/Button'
+import Input from '../../components/atoms/Input'
+import Button from '../../components/atoms/Button'
 
 interface ZipCodeSearchProps {
   onSearch: (zipCode: string) => void

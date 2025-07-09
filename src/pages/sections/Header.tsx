@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Menu, X, Shield } from 'lucide-react'
-import Button from '../atoms/Button'
+import Button from '../../components/atoms/Button'
 import { Link } from '@tanstack/react-router'
 
 const Header: React.FC = () => {
