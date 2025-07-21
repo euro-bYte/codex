@@ -32,7 +32,7 @@ const YourInsurance: React.FC<YourInsuranceProps> = ({
       coverageAmount: 50000,
       deductible: 500,
       provider: 'Urban Shield Co.',
-      createdAt: new Date('2025-06-01'),
+      createdAt: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
     },
   ]
 
