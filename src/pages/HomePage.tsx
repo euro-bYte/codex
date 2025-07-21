@@ -1,9 +1,8 @@
-import { Link } from '@tanstack/react-router'
-
 import Header from './sections/Header'
 import Footer from './sections/Footer'
 import StateExplorer from '../components/molecules/StateExplorer'
 import ButtonGroup, { ButtonItem } from '../components/molecules/ButtonGroup'
+import YourInsurance from '../components/features/YourInsurance'
 import { useState } from 'react'
 
 function HomePage() {
@@ -18,7 +17,7 @@ function HomePage() {
       },
       {
         id: 'btn-2',
-        label: 'Explore',
+        label: 'Explore Rates',
       },
     ]
   }
@@ -36,42 +35,23 @@ function HomePage() {
       <main className="flex-grow container mx-auto px-4 py-8 pt-24">
         <h1 className="text-3xl font-bold mb-6">Welcome to Your Dashboard</h1>
 
-        <div className="bg-white rounded-lg shadow p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">Your Information</h2>
-          <p className="mb-4">
-            This is your personalized home page where you can manage your
-            insurance information.
-          </p>
-
-          <div className="mt-6">
-            <Link
-              to="/"
-              className="text-blue-600 hover:text-blue-800 underline"
-            >
-              Back to Landing Page
-            </Link>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          <div className="p-6">
-            <div className="mb-2">
-              <ButtonGroup
-                buttons={buttons}
-                size={'lg'}
-                isJoined={true}
-                activeButtonId={activeId}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-        </div>
-
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold mb-6">
-            Explore States & ZIP Codes
-          </h2>
-          <StateExplorer />
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-semibold">
+              {activeId === 'btn-1'
+                ? 'Your Insurance Policies'
+                : 'Explore States & ZIP Codes'}
+            </h2>
+            <ButtonGroup
+              buttons={buttons}
+              size={'md'}
+              isJoined={true}
+              activeButtonId={activeId}
+              onChange={handleChange}
+              className="shadow-sm"
+            />
+          </div>
+          {activeId === 'btn-1' ? <YourInsurance /> : <StateExplorer />}
         </div>
       </main>
 
