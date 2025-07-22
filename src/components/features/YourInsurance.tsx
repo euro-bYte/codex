@@ -10,7 +10,7 @@ interface YourInsuranceProps {
 const YourInsurance: React.FC<YourInsuranceProps> = ({
   userInsurances = [],
 }) => {
-  // Mock data if no insurance data is provided
+  // Mock data if no insurance data is provided remove when integrating with backend
   const mockInsurances: InsuranceData[] = [
     {
       id: '1',
@@ -32,7 +32,7 @@ const YourInsurance: React.FC<YourInsuranceProps> = ({
       coverageAmount: 50000,
       deductible: 500,
       provider: 'Urban Shield Co.',
-      createdAt: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
+      createdAt: new Date('2025-06-01'),
     },
   ]
 
