@@ -58,7 +58,6 @@ const YourInsurance: React.FC<YourInsuranceProps> = ({
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h3 className="text-xl font-medium">Your Insurance Policies</h3>
         <Button variant="outline" size="sm">
           Add New Policy
         </Button>
