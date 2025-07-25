@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Card from '../atoms/Card'
 import Button from '../atoms/Button'
+import AddPolicyModal from '../molecules/AddPolicyModal'
 import { InsuranceData } from '../../types'
 
 interface YourInsuranceProps {
@@ -36,7 +37,32 @@ const YourInsurance: React.FC<YourInsuranceProps> = ({
     },
   ]
 
-  const insurances = userInsurances.length > 0 ? userInsurances : mockInsurances
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [insurances, setInsurances] = useState<InsuranceData[]>(
+    userInsurances.length > 0 ? userInsurances : mockInsurances
+  )
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+  }
+
+  const handleSavePolicy = (
+    policyData: Omit<InsuranceData, 'id' | 'createdAt'>
+  ) => {
+    // In a real app, this would send data to the backend
+    // For now, we'll just add it to our local state with a mock ID
+    const newPolicy: InsuranceData = {
+      ...policyData,
+      id: `new-${Date.now()}`, // Generate a temporary ID
+      createdAt: new Date(),
+    }
+
+    setInsurances((prev) => [newPolicy, ...prev])
+  }
 
   const formatCurrency = (amount: number): string => {
     return new Intl.NumberFormat('en-US', {
@@ -58,7 +84,11 @@ const YourInsurance: React.FC<YourInsuranceProps> = ({
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <Button variant="outline" size="sm">
+        <Button 
+          variant="outline" 
+          size="sm"
+          onClick={handleOpenModal}
+        >
           Add New Policy
         </Button>
       </div>
@@ -68,7 +98,7 @@ const YourInsurance: React.FC<YourInsuranceProps> = ({
           <p className="text-gray-500 mb-4">
             You don't have any insurance policies yet.
           </p>
-          <Button>Add Your First Policy</Button>
+          <Button onClick={handleOpenModal}>Add Your First Policy</Button>
         </Card>
       ) : (
         <div className="space-y-4">
@@ -143,6 +173,13 @@ const YourInsurance: React.FC<YourInsuranceProps> = ({
           Compare Now
         </Button>
       </div>
+      
+      {/* Add Policy Modal */}
+      <AddPolicyModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onSave={handleSavePolicy}
+      />
     </div>
   )
 }
