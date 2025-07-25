@@ -44,9 +44,9 @@ const ExploreSection: React.FC<ExploreSectionProps> = ({
         ? a.provider.localeCompare(b.provider)
         : b.provider.localeCompare(a.provider)
     } else {
-      // @ts-ignore
+      // @ts-expect-error
       const aValue = a[sortBy]
-      // @ts-ignore
+      // @ts-expect-error
       const bValue = b[sortBy]
 
       return sortOrder === 'asc' ? aValue - bValue : bValue - aValue

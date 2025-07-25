@@ -1,7 +1,7 @@
 import React from 'react'
 import { USAMap } from '@mirawision/usa-map-react'
 import { StateCode } from '../../types'
-import { CustomStateFill } from '../molecules/StateExplorer'
+import { CustomStateFill } from '../organisms/StateExplorer'
 
 type USAMapProps = {
   onStateSelect: (state: StateCode) => void
