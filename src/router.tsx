@@ -10,7 +10,7 @@ import HomePage from './pages/HomePage'
 const browserHistory = createBrowserHistory()
 
 // Define your root route
-const rootRoute = createRootRouteWithContext<{}>()()
+const rootRoute = createRootRouteWithContext<object>()()
 
 // Define child routes
 const landingRoute = new Route({

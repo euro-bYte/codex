@@ -1,8 +1,8 @@
 import Header from './sections/Header'
 import Footer from './sections/Footer'
-import StateExplorer from '../components/molecules/StateExplorer'
+import StateExplorer from '../components/organisms/StateExplorer'
 import ButtonGroup, { ButtonItem } from '../components/molecules/ButtonGroup'
-import YourInsurance from '../components/features/YourInsurance'
+import YourInsurance from '../components/organisms/YourInsurance'
 import { useState } from 'react'
 
 function HomePage() {
