@@ -1,26 +1,14 @@
 import React, { useMemo, useState } from 'react'
-import USAMapAtom from '../atoms/USAMap'
-import { StateCode } from '../../types'
-import { stateZipCodes, stateNames } from '../../utils/stateData'
-import {
-  mockInsuranceData,
-  mockZipCodes,
-  getZipCodeData,
-} from '../../utils/mockData'
+import USAMap from '../atoms/USAMap'
+import { StateCode, StateInsuranceStats } from '../../types'
+import { stateNames } from '../../utils/stateData'
+import { mockInsuranceData, mockZipCodes } from '../../utils/mockData'
 import Card from '../atoms/Card'
-import Input from '../atoms/Input'
+import ZipCodeSearch from '../molecules/ZipCodeSearch'
+import InsuranceStats from '../molecules/InsuranceStats'
 
 export type CustomStateFill = {
   [key in StateCode]?: { fill: string; stroke: string }
-}
-
-interface StateInsuranceStats {
-  homeAverage: number
-  rentersAverage: number
-  totalAverage: number
-  homeCount: number
-  rentersCount: number
-  totalCount: number
 }
 
 // Helper function to calculate insurance averages by state
@@ -66,11 +54,41 @@ const getStateInsuranceAverages = (
   }
 }
 
+// Helper function to calculate national insurance averages
+const getNationalInsuranceAverages = (): StateInsuranceStats => {
+  const homeInsurance = mockInsuranceData.filter(
+    (ins) => ins.insuranceType === 'home'
+  )
+  const rentersInsurance = mockInsuranceData.filter(
+    (ins) => ins.insuranceType === 'renters'
+  )
+
+  const homeTotal = homeInsurance.reduce(
+    (sum, ins) => sum + ins.monthlyPremium,
+    0
+  )
+  const rentersTotal = rentersInsurance.reduce(
+    (sum, ins) => sum + ins.monthlyPremium,
+    0
+  )
+
+  return {
+    homeAverage:
+      homeInsurance.length > 0 ? homeTotal / homeInsurance.length : 0,
+    rentersAverage:
+      rentersInsurance.length > 0 ? rentersTotal / rentersInsurance.length : 0,
+    totalAverage:
+      mockInsuranceData.length > 0
+        ? (homeTotal + rentersTotal) / mockInsuranceData.length
+        : 0,
+    homeCount: homeInsurance.length,
+    rentersCount: rentersInsurance.length,
+    totalCount: mockInsuranceData.length,
+  }
+}
+
 const StateExplorer: React.FC = () => {
   const [selectedState, setSelectedState] = useState<StateCode | null>(null)
-  const [searchZip, setSearchZip] = useState<string>('')
-  const [zipData, setZipData] = useState<any>(null)
-  const [zipError, setZipError] = useState<string>('')
 
   const customStates = useMemo<CustomStateFill>(() => {
     const stateFill: CustomStateFill = {}
@@ -85,6 +103,10 @@ const StateExplorer: React.FC = () => {
     return stateFill
   }, [selectedState])
 
+  const nationalInsuranceStats = useMemo<StateInsuranceStats>(() => {
+    return getNationalInsuranceAverages()
+  }, [])
+
   const stateInsuranceStats = useMemo<StateInsuranceStats | null>(() => {
     if (!selectedState) return null
     return getStateInsuranceAverages(selectedState)
@@ -92,26 +114,6 @@ const StateExplorer: React.FC = () => {
 
   const handleStateSelect = (stateCode: StateCode): void => {
     setSelectedState(stateCode === selectedState ? null : stateCode)
-    // Reset zip search when selecting a new state
-    setZipData(null)
-    setZipError('')
-  }
-
-  const handleZipSearch = () => {
-    if (!searchZip || searchZip.trim().length !== 5) {
-      setZipError('Please enter a valid 5-digit ZIP code')
-      setZipData(null)
-      return
-    }
-
-    const zipInfo = getZipCodeData(searchZip)
-    if (zipInfo) {
-      setZipData(zipInfo)
-      setZipError('')
-    } else {
-      setZipData(null)
-      setZipError('No data found for this ZIP code')
-    }
   }
 
   return (
@@ -119,7 +121,7 @@ const StateExplorer: React.FC = () => {
       <div className="lg:col-span-2">
         <Card className="p-4">
           <h2 className="text-xl font-semibold mb-4">Select a State</h2>
-          <USAMapAtom
+          <USAMap
             onStateSelect={handleStateSelect}
             customStates={customStates}
           />
@@ -131,125 +133,54 @@ const StateExplorer: React.FC = () => {
 
       <div>
         <Card className="p-4 h-full">
-          <h2 className="text-xl font-semibold mb-4">State Information</h2>
+          <h2 className="text-xl font-semibold mb-4">
+            {selectedState ? 'State Information' : 'National Information'}
+          </h2>
 
           {selectedState ? (
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div
-                  className="w-4 h-4 rounded-full"
-                  style={{ backgroundColor: '#4f46e5' }}
-                />
-                <h3 className="text-lg font-medium">
-                  {stateNames[selectedState]} ({selectedState})
-                </h3>
+              <div className="mb-6">
+                <div className="flex items-center gap-2 mb-1">
+                  <div
+                    className="w-4 h-4 rounded-full"
+                    style={{ backgroundColor: '#4f46e5' }}
+                  />
+                  <h3 className="text-lg font-medium">
+                    {stateNames[selectedState]} ({selectedState})
+                  </h3>
+                </div>
               </div>
 
               {/* Insurance Premium Stats */}
               {stateInsuranceStats && stateInsuranceStats.totalCount > 0 && (
-                <div className="mb-6">
-                  <p className="font-medium mb-2">Insurance Averages:</p>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <p className="text-sm text-gray-500">Home Insurance</p>
-                        <p className="text-lg font-medium">
-                          ${stateInsuranceStats.homeAverage.toFixed(2)}/mo
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          {stateInsuranceStats.homeCount} policies
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-500">
-                          Renters Insurance
-                        </p>
-                        <p className="text-lg font-medium">
-                          ${stateInsuranceStats.rentersAverage.toFixed(2)}/mo
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          {stateInsuranceStats.rentersCount} policies
-                        </p>
-                      </div>
-                    </div>
-                    <div className="mt-3 pt-3 border-t border-gray-200">
-                      <p className="text-sm text-gray-500">Average Premium</p>
-                      <p className="text-xl font-medium">
-                        ${stateInsuranceStats.totalAverage.toFixed(2)}/mo
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                <InsuranceStats stats={stateInsuranceStats} />
               )}
-
-              <div className="space-y-2 mb-6">
-                <p className="font-medium">ZIP Code Ranges:</p>
-                <ul className="list-disc pl-5 space-y-1">
-                  {stateZipCodes[selectedState].map((zipRange, index) => (
-                    <li key={index} className="text-gray-700">
-                      {zipRange}
-                    </li>
-                  ))}
-                </ul>
+            </div>
+          ) : (
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-4 h-4 rounded-full bg-blue-200" />
+                <h3 className="text-lg font-medium">National Averages</h3>
               </div>
 
-              {/* ZIP Code Search */}
+              {/* National Insurance Premium Stats */}
+              <InsuranceStats
+                stats={nationalInsuranceStats}
+                isNational={true}
+              />
+
               <div className="mt-6 pt-4 border-t border-gray-200">
-                <h3 className="text-lg font-medium mb-4">ZIP Code Search</h3>
-                <div className="flex gap-4">
-                  <div className="flex-grow">
-                    <Input
-                      label="Enter ZIP Code"
-                      placeholder="e.g. 90210"
-                      value={searchZip}
-                      onChange={(e) => setSearchZip(e.target.value)}
-                      error={zipError}
-                      maxLength={5}
-                    />
-                  </div>
-                  <div className="flex items-end">
-                    <button
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md h-[42px] transition-colors"
-                      onClick={handleZipSearch}
-                    >
-                      Search
-                    </button>
-                  </div>
-                </div>
-
-                {zipData && (
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <h4 className="text-md font-medium">
-                      {zipData.city}, {zipData.state} ({zipData.zipCode})
-                    </h4>
-                    <div className="mt-2 grid grid-cols-2 gap-4">
-                      <div className="bg-gray-50 p-3 rounded-md">
-                        <p className="text-sm text-gray-500">Average Premium</p>
-                        <p className="text-lg font-medium">
-                          ${zipData.averagePremium.toFixed(2)}/mo
-                        </p>
-                      </div>
-                      <div className="bg-gray-50 p-3 rounded-md">
-                        <p className="text-sm text-gray-500">Policies</p>
-                        <p className="text-lg font-medium">
-                          {zipData.insuranceCount}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                <p className="text-sm text-gray-500 mt-4">
-                  These ZIP code ranges are approximate. For specific ZIP code
-                  information, use the search above.
+                <p className="text-sm text-gray-600">
+                  Select a state on the map to see state-specific insurance data
+                  and ZIP code ranges.
                 </p>
               </div>
             </div>
-          ) : (
-            <div className="flex items-center justify-center h-64 text-gray-400">
-              <p>Select a state to view information</p>
-            </div>
           )}
+          {/* ZIP Code Search */}
+          <div className="mt-6 pt-4 border-t border-gray-200">
+            <ZipCodeSearch />
+          </div>
         </Card>
       </div>
     </div>

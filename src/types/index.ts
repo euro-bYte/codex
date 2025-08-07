@@ -20,6 +20,15 @@ export interface ZipCodeData {
   insuranceCount: number
 }
 
+export interface StateInsuranceStats {
+  homeAverage: number
+  rentersAverage: number
+  totalAverage: number
+  homeCount: number
+  rentersCount: number
+  totalCount: number
+}
+
 // USA State codes type
 export type StateCode =
   | 'AL'
