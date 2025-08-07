@@ -531,14 +531,6 @@ export const mockZipCodes: ZipCodeData[] = [
   },
 ]
 
-export const getInsuranceByZipCode = (zipCode: string): InsuranceData[] => {
-  return mockInsuranceData.filter((insurance) => insurance.zipCode === zipCode)
-}
-
-export const getZipCodeData = (zipCode: string): ZipCodeData | undefined => {
-  return mockZipCodes.find((data) => data.zipCode === zipCode)
-}
-
 export const saveInsurance = (insurance: InsuranceData): void => {
   // In a real app, this would save to a database
   console.log('Saving insurance data:', insurance)
